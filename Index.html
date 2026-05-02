@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operação Gravata | Lista de Doações</title>
+    <style>
+        :root {
+            --gold: #c5a059;
+            --navy: #1a2a6c;
+            --bg: #f4f4f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            width: 100%;
+            max-width: 450px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: var(--navy);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .header h1 { margin: 0; font-size: 1.5rem; text-transform: uppercase; }
+
+        /* Formulário de Entrada */
+        .input-section {
+            padding: 20px;
+            background: #fff;
+            border-bottom: 2px solid #eee;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        input {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        input[type="text"] { flex: 2; }
+        input[type="number"] { flex: 1; }
+
+        .btn-add {
+            width: 100%;
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-add:hover { background: #b08d4a; }
+
+        /* Lista de Doações */
+        .list-container {
+            padding: 10px 20px;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .donation-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .donor-info { font-weight: 600; color: #333; }
+        .donor-value { 
+            color: #27ae60; 
+            background: #eafaf1; 
+            padding: 4px 10px; 
+            border-radius: 15px; 
+            font-size: 0.9rem;
+        }
+
+        .empty-msg {
+            text-align: center;
+            color: #999;
+            padding: 30px;
+            font-style: italic;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>✂️ Gravata do Noivo</h1>
+        <p>Registre a sua contribuição!</p>
+    </div>
+
+    <div class="input-section">
+        <div class="input-group">
+            <input type="text" id="nome" placeholder="Nome do convidado">
+            <input type="number" id="valor" placeholder="R$">
+        </div>
+        <button class="btn-add" onclick="adicionarDoacao()">Confirmar Doação</button>
+    </div>
+
+    <div class="list-container" id="listaDoacoes">
+        <div class="empty-msg" id="msgVazia">Nenhuma doação registrada ainda.</div>
+    </div>
+</div>
+
+<script>
+    function adicionarDoacao() {
+        const nomeInput = document.getElementById('nome');
+        const valorInput = document.getElementById('valor');
+        const lista = document.getElementById('listaDoacoes');
+        const msgVazia = document.getElementById('msgVazia');
+
+        const nome = nomeInput.value.trim();
+        const valor = valorInput.value.trim();
+
+        if (nome === '' || valor === '') {
+            alert("Por favor, preencha o nome e o valor!");
+            return;
+        }
+
+        // Remove a mensagem de "vazio" na primeira doação
+        if (msgVazia) {
+            msgVazia.style.display = 'none';
+        }
+
+        // Cria o elemento da doação
+        const div = document.createElement('div');
+        div.className = 'donation-row';
+        div.innerHTML = `
+            <span class="donor-info">${nome}</span>
+            <span class="donor-value">R$ ${parseFloat(valor).toFixed(2).replace('.', ',')}</span>
+        `;
+
+        // Adiciona no topo da lista
+        lista.insertBefore(div, lista.firstChild);
+
+        // Limpa os campos
+        nomeInput.value = '';
+        valorInput.value = '';
+        nomeInput.focus();
+    }
+</script>
+
+</body>
+</html>
