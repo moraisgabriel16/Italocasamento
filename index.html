@@ -1,176 +1,169 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Operação Gravata | Lista de Doações</title>
+    <title>Relatório Operação Gravata</title>
     <style>
-        :root {
-            --gold: #c5a059;
-            --navy: #1a2a6c;
-            --bg: #f4f4f9;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f0f2f5;
             margin: 0;
-            display: flex;
-            justify-content: center;
             padding: 20px;
+            color: #333;
         }
-
         .container {
+            max-width: 800px;
+            margin: 0 auto;
             background: white;
-            width: 100%;
-            max-width: 450px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            overflow: hidden;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
-
-        .header {
-            background: var(--navy);
-            color: white;
-            padding: 25px;
+        header {
             text-align: center;
+            border-bottom: 2px solid #1a3a5a;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
         }
-
-        .header h1 { margin: 0; font-size: 1.5rem; text-transform: uppercase; }
-
-        /* Formulário de Entrada */
-        .input-section {
-            padding: 20px;
-            background: #fff;
-            border-bottom: 2px solid #eee;
+        h1 {
+            color: #1a3a5a;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-
-        .input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        input {
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            outline: none;
-        }
-
-        input[type="text"] { flex: 2; }
-        input[type="number"] { flex: 1; }
-
-        .btn-add {
-            width: 100%;
-            background: var(--gold);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn-add:hover { background: #b08d4a; }
-
-        /* Lista de Doações */
-        .list-container {
-            padding: 10px 20px;
-            max-height: 350px;
-            overflow-y: auto;
-        }
-
-        .donation-row {
+        .summary {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #f0f0f0;
-            animation: fadeIn 0.5s ease;
+            margin-bottom: 30px;
         }
-
-        .donor-info { font-weight: 600; color: #333; }
-        .donor-value { 
-            color: #27ae60; 
-            background: #eafaf1; 
-            padding: 4px 10px; 
-            border-radius: 15px; 
-            font-size: 0.9rem;
-        }
-
-        .empty-msg {
+        .card {
+            background: #f8fafc;
+            padding: 15px 25px;
+            border-radius: 8px;
+            border-left: 5px solid #1a3a5a;
+            flex: 1;
+            margin: 0 10px;
             text-align: center;
-            color: #999;
-            padding: 30px;
-            font-style: italic;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .card span {
+            display: block;
+            font-size: 0.9em;
+            color: #64748b;
+        }
+        .card strong {
+            font-size: 1.4em;
+            color: #1a3a5a;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            background-color: #1a3a5a;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        .val {
+            text-align: right;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+        }
+        .total-row {
+            background-color: #1a3a5a !important;
+            color: white;
+        }
+        .total-row td {
+            padding: 15px;
+            font-size: 1.2em;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header">
-        <h1>✂️ Gravata do Noivo</h1>
-        <p>Registre a sua contribuição!</p>
-    </div>
+    <header>
+        <h1>Operação Gravata</h1>
+        <p>Lista Consolidada de Contribuições</p>
+    </header>
 
-    <div class="input-section">
-        <div class="input-group">
-            <input type="text" id="nome" placeholder="Nome do convidado">
-            <input type="number" id="valor" placeholder="R$">
+    <div class="summary">
+        <div class="card">
+            <span>Total Arrecadado</span>
+            <strong>R$ 4.846,00</strong>
         </div>
-        <button class="btn-add" onclick="adicionarDoacao()">Confirmar Doação</button>
+        <div class="card">
+            <span>Contribuintes</span>
+            <strong>41</strong>
+        </div>
     </div>
 
-    <div class="list-container" id="listaDoacoes">
-        <div class="empty-msg" id="msgVazia">Nenhuma doação registrada ainda.</div>
-    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Convidado</th>
+                <th style="text-align: right;">Valor (R$)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Waguin</td><td class="val">501,00</td></tr>
+            <tr><td>Cidra</td><td class="val">500,00</td></tr>
+            <tr><td>Gustavo Felipe</td><td class="val">300,00</td></tr>
+            <tr><td>Gordo</td><td class="val">250,00</td></tr>
+            <tr><td>Fonseca</td><td class="val">200,00</td></tr>
+            <tr><td>Elias</td><td class="val">200,00</td></tr>
+            <tr><td>Icaro</td><td class="val">150,00</td></tr>
+            <tr><td>Bocao</td><td class="val">150,00</td></tr>
+            <tr><td>João Pedro</td><td class="val">120,00</td></tr>
+            <tr><td>Marcelo</td><td class="val">100,00</td></tr>
+            <tr><td>Rildo</td><td class="val">100,00</td></tr>
+            <tr><td>Blanco</td><td class="val">100,00</td></tr>
+            <tr><td>Rodrigo</td><td class="val">100,00</td></tr>
+            <tr><td>Ratinho</td><td class="val">100,00</td></tr>
+            <tr><td>Evandro</td><td class="val">100,00</td></tr>
+            <tr><td>José Neto</td><td class="val">100,00</td></tr>
+            <tr><td>Murilo</td><td class="val">100,00</td></tr>
+            <tr><td>Jovita</td><td class="val">100,00</td></tr>
+            <tr><td>Arthur</td><td class="val">100,00</td></tr>
+            <tr><td>Everton</td><td class="val">100,00</td></tr>
+            <tr><td>Safadao</td><td class="val">100,00</td></tr>
+            <tr><td>Tonim</td><td class="val">100,00</td></tr>
+            <tr><td>Rondileni</td><td class="val">100,00</td></tr>
+            <tr><td>Ander</td><td class="val">100,00</td></tr>
+            <tr><td>Manuel</td><td class="val">100,00</td></tr>
+            <tr><td>Yago (1)</td><td class="val">100,00</td></tr>
+            <tr><td>Paulin</td><td class="val">60,00</td></tr>
+            <tr><td>Klisman</td><td class="val">50,00</td></tr>
+            <tr><td>Negão</td><td class="val">50,00</td></tr>
+            <tr><td>Fidel</td><td class="val">50,00</td></tr>
+            <tr><td>Tio Edson</td><td class="val">50,00</td></tr>
+            <tr><td>Edycarlos</td><td class="val">50,00</td></tr>
+            <tr><td>José Humberto</td><td class="val">50,00</td></tr>
+            <tr><td>Odilon</td><td class="val">50,00</td></tr>
+            <tr><td>Ernades</td><td class="val">50,00</td></tr>
+            <tr><td>Osmar</td><td class="val">50,00</td></tr>
+            <tr><td>Yago (2)</td><td class="val">50,00</td></tr>
+            <tr><td>Valtui</td><td class="val">20,00</td></tr>
+            <tr><td>Tio Celso</td><td class="val">20,00</td></tr>
+            <tr><td>Da Pinga</td><td class="val">20,00</td></tr>
+            <tr><td>Ronolfe</td><td class="val">5,00</td></tr>
+        </tbody>
+        <tfoot>
+            <tr class="total-row">
+                <td><strong>VALOR TOTAL</strong></td>
+                <td class="val">R$ 4.846,00</td>
+            </tr>
+        </tfoot>
+    </table>
 </div>
-
-<script>
-    function adicionarDoacao() {
-        const nomeInput = document.getElementById('nome');
-        const valorInput = document.getElementById('valor');
-        const lista = document.getElementById('listaDoacoes');
-        const msgVazia = document.getElementById('msgVazia');
-
-        const nome = nomeInput.value.trim();
-        const valor = valorInput.value.trim();
-
-        if (nome === '' || valor === '') {
-            alert("Por favor, preencha o nome e o valor!");
-            return;
-        }
-
-        // Remove a mensagem de "vazio" na primeira doação
-        if (msgVazia) {
-            msgVazia.style.display = 'none';
-        }
-
-        // Cria o elemento da doação
-        const div = document.createElement('div');
-        div.className = 'donation-row';
-        div.innerHTML = `
-            <span class="donor-info">${nome}</span>
-            <span class="donor-value">R$ ${parseFloat(valor).toFixed(2).replace('.', ',')}</span>
-        `;
-
-        // Adiciona no topo da lista
-        lista.insertBefore(div, lista.firstChild);
-
-        // Limpa os campos
-        nomeInput.value = '';
-        valorInput.value = '';
-        nomeInput.focus();
-    }
-</script>
 
 </body>
 </html>
